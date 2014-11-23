@@ -9,6 +9,14 @@ namespace :db do
     require_relative 'lib/app'
   end
 
+  desc 'Reset database'
+  task :reset => [
+    'db:drop',
+    'db:create',
+    'db:migrate',
+    'db:seed'
+  ]
+
   namespace :test do
     desc 'Reset test database'
     task :reset do

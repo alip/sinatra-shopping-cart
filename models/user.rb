@@ -12,22 +12,19 @@ class User < ActiveRecord::Base
   include Swagger::Blocks
   swagger_model :User do
     key :id, :User
+    key :required, [:id, :name, :username]
     property :id do
       key :type, :integer
       key :format, :int64
-      key :required, :true
+      key :description, 'Unique identifier for User'
     end
     property :name do
       key :type, :string
-      key :required, :true
+      key :description, 'User (real) name'
     end
     property :username do
       key :type, :string
-      key :required, :true
-    end
-    property :name do
-      key :type, :string
-      key :required, :true
+      key :description, 'User name'
     end
   end
 end

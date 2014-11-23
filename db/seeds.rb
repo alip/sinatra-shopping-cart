@@ -11,7 +11,7 @@ when /development|test/
     #Cart.for_user(u).create
   end
 
-  #(1..10).each do |i|
-  #  Product.create(:name => "Product #{i}", :price => i * 10.0)
-  #end
+  (1..10).each do |i|
+    Product.create(:name => "Product #{i}", :price => i * 10.0)
+  end
 end
