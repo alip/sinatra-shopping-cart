@@ -4,3 +4,5 @@
 
 require_relative 'user'
 require_relative 'product'
+require_relative 'cart_item'
+require_relative 'cart'
