@@ -10,3 +10,6 @@
 
 # Must *not* be in version control
 config/database.yml
+
+# Logs
+log/*.log
