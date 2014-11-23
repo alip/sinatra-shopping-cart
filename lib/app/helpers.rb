@@ -9,9 +9,5 @@ class SampleShop
     def json(json)
       MultiJson.dump(json, :pretty => true)
     end
-
-    def current_user
-      env['warden'].user
-    end
   end
 end

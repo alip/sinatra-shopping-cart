@@ -20,7 +20,7 @@ class SampleShop < Sinatra::Base
     set :root, File.expand_path(File.join(File.dirname(__FILE__), '..'))
   end
 
-  PROTECTED_ROUTES = ['/api/carts/*']
+  PROTECTED_ROUTES = ['/api/carts', '/api/carts/*']
   AUTH_ERROR_ROUTE = '/api/unauthenticated'
 end
 
@@ -63,32 +63,32 @@ class SampleShop < Sinatra::Base
     c = Cart.for_user(current_user).find(params[:id])
     p = Product.find(params[:product_id])
 
-    c.add_to_cart(p, params[:quantity])
+    c.add_to_cart(p, params[:quantity]).to_json
   end
 
   delete '/api/carts/:id/remove_product' do
     c = Cart.for_user(current_user).find(params[:id])
     p = Product.find(params[:product_id])
 
-    c.remove_from_cart(p, params[:quantity])
+    c.remove_from_cart(p, params[:quantity]).to_json
   end
 
   delete '/api/carts/:id/clean' do
     c = Cart.for_user(current_user).find(params[:id])
 
-    c.clean
+    c.clean.to_json
   end
 
   patch '/api/carts/:id/product/:product_id/set_quantity' do
     c = Cart.for_user(current_user).find(params[:id])
     p = Product.find(params[:product_id])
 
-    c.set_quantity(p, params[:quantity])
+    c.set_quantity(p, params[:quantity]).to_json
   end
 
   get '/api/carts/:id/total_price' do
     c = Cart.for_user(current_user).find(params[:id])
 
-    c.total_price
+    c.total_price.to_json
   end
 end

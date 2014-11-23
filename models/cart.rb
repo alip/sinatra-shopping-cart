@@ -58,10 +58,7 @@ class Cart < ActiveRecord::Base
   end
 
   def as_json(options = {})
-    super(options.merge(:only => [:id], :methods => [:total_price],
-                        :include => {:cart_items => {:only => [:quantity],
-                                                     :methods => [:total_price],
-                                                     :include => {:product => {:only => [:name, :price]}}}}))
+    super(options.merge(:include => {:cart_items => {:include => {:product => {:only => [:name, :price]}}}}))
   end
 
   private

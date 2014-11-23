@@ -12,6 +12,14 @@ class SampleShop
     config.intercept_401 = false
   end
 
+  def warden_handler
+    env['warden']
+  end
+
+  def current_user
+    warden_handler.user
+  end
+
   PROTECTED_ROUTES.each do |route|
     before route do
       env['warden'].authenticate!(:password)
