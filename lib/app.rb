@@ -8,6 +8,8 @@ require 'sinatra/activerecord'
 require_relative '../models/init'
 
 class SampleShop < Sinatra::Base
+  register Sinatra::ActiveRecordExtension
+
   set :app_file, __FILE__
 
   get '/' do
