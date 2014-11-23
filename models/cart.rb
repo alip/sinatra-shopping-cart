@@ -9,12 +9,11 @@ class Cart < ActiveRecord::Base
   scope :for_user, -> (u) { where(:user => u) }
 
   def add_to_cart(product, quantity = 1)
-    item = cart_items.find_or_initialize_by(:product => product) do |new_cart_item|
+    item = cart_items.find_or_create_by!(:product => product) do |new_cart_item|
       new_cart_item = 0
     end
 
-    item.quantity += quantity
-    item.save!
+    item.update!(:quantity => item.quantity + quantity)
 
     self
   end
@@ -22,11 +21,11 @@ class Cart < ActiveRecord::Base
   def remove_from_cart(product, quantity = 1)
     item = cart_items.find_by!(:product => product)
 
-    item.quantity -= quantity
-    if item.quantity <= 0 then
+    new_quantity -= quantity
+    if new_quantity <= 0 then
       item.destroy
     else
-      item.save!
+      item.update!(:quantity => new_quantity)
     end
 
     self
@@ -38,11 +37,7 @@ class Cart < ActiveRecord::Base
   end
 
   def set_quantity(product, quantity)
-    if quantity.is_a? Integer then
-      cart_items.find_by!(:product => product).update!(:quantity => quantity)
-    else
-      errors.add_to_base('quantity not a number')
-    end
+    cart_items.find_by!(:product => product).update!(:quantity => quantity)
     self
   end
 
