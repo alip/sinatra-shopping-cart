@@ -175,7 +175,7 @@ class SampleShop
         end
         parameter do
           key :paramType, :path
-          key :name, : :cart_id
+          key :name, :cart_id
           key :description, 'Cart Id'
           key :required, true
           key :type, :string
