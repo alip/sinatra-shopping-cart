@@ -43,6 +43,21 @@ class SampleShop
     end
   end
 
+  swagger_model :CartItem do
+    key :id, :CartItem
+    key :required, [:id]
+    property :id do
+      key :type, :integer
+      key :format, :int64
+      key :description, 'Unique identifier for CartItem'
+    end
+    property :quantity do
+      key :type, :integer
+      key :format, :int64
+      key :description, 'CartItem quantity'
+    end
+  end
+
   swagger_model :Product do
     key :id, :Product
     key :required, [:id, :name, :price]
@@ -263,6 +278,137 @@ class SampleShop
           key :description, 'Product quantity'
           key :required, true
           key :type, :integer
+        end
+        response_message do
+          key :code, 400
+          key :message, 'Invalid arguments'
+        end
+        response_message do
+          key :code, 401
+          key :message, 'Invalid username or password'
+        end
+      end
+    end
+    api do
+      key :path, '/carts/{cart_id}/clean'
+      operation do
+        key :method, 'DELETE'
+        key :summary, 'Remove all Products from Cart'
+        key :notes, 'Remove all products from cart'
+        key :nickname, :clean
+        key :type, :Cart
+        parameter do
+          key :paramType, :header
+          key :name, :'USERNAME'
+          key :description, 'User name'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :header
+          key :name, :'PASSWORD'
+          key :description, 'User password'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :path
+          key :name, :cart_id
+          key :description, 'Cart ID'
+          key :required, true
+          key :type, :Cart
+        end
+        response_message do
+          key :code, 400
+          key :message, 'Invalid arguments'
+        end
+        response_message do
+          key :code, 401
+          key :message, 'Invalid username or password'
+        end
+      end
+    end
+    api do
+      key :path, '/carts/{cart_id}/product/{product_id}/set_quantity'
+      operation do
+        key :method, 'PATCH'
+        key :summary, 'Set quantity of the given Product in the given Cart'
+        key :notes, 'Remove all products from cart'
+        key :nickname, :set_quantity
+        key :type, :Cart
+        parameter do
+          key :paramType, :header
+          key :name, :'USERNAME'
+          key :description, 'User name'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :header
+          key :name, :'PASSWORD'
+          key :description, 'User password'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :path
+          key :name, :cart_id
+          key :description, 'Cart ID'
+          key :required, true
+          key :type, :Cart
+        end
+        parameter do
+          key :paramType, :path
+          key :name, :product_id
+          key :description, 'Product ID'
+          key :required, true
+          key :type, :Cart
+        end
+        parameter do
+          key :paramType, :query
+          key :name, :quantity
+          key :description, 'Product quantity'
+          key :required, true
+          key :type, :integer
+        end
+        response_message do
+          key :code, 400
+          key :message, 'Invalid arguments'
+        end
+        response_message do
+          key :code, 401
+          key :message, 'Invalid username or password'
+        end
+      end
+    end
+    api do
+      key :path, '/carts/{cart_id}/total_price'
+      operation do
+        key :method, 'GET'
+        key :summary, 'Get total price of Products in a Cart'
+        key :notes, 'Returns total price of Products in a Cart'
+        key :nickname, :total_price
+        key :type, :integer
+        parameter do
+          key :paramType, :header
+          key :name, :'USERNAME'
+          key :description, 'User name'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :header
+          key :name, :'PASSWORD'
+          key :description, 'User password'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :path
+          key :name, :cart_id
+          key :description, 'Cart ID'
+          key :required, true
+          key :type, :Cart
         end
         response_message do
           key :code, 400
