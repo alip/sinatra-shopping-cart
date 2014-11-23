@@ -3,6 +3,7 @@
 # Licensed under the terms of the GNU General Public License v3 (or later)
 
 require 'sinatra/base'
+require 'sinatra/activerecord'
 
 class SampleShop < Sinatra::Base
   set :app_file, __FILE__
