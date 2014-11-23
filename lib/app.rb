@@ -34,8 +34,12 @@ class SampleShop < Sinatra::Base
     content_type :json
   end
 
+  error do # TODO: ActiveRecord errors _must_ be handled.
+    halt 400, json({:message => 'Unknown error'})
+  end
+
   get '/' do
-    redirect '/index.html' # Swagger
+    redirect '/index.html' # Swagger-UI
   end
 
   get '/api/products/index' do

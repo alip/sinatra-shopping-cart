@@ -33,6 +33,53 @@ class SampleShop
     end
   end
 
+  swagger_model :Cart do
+    key :id, :Cart
+    key :required, [:id]
+    property :id do
+      key :type, :integer
+      key :format, :int64
+      key :description, 'Unique identifier for Cart'
+    end
+  end
+
+  swagger_model :Product do
+    key :id, :Product
+    key :required, [:id, :name, :price]
+    property :id do
+      key :type, :integer
+      key :format, :int64
+      key :description, 'Unique identifier for Product'
+    end
+    property :name do
+      key :type, :string
+      key :description, 'Product name'
+    end
+    property :price do
+      key :type, :string
+      key :minimum, '0.01'
+      key :description, 'Product price'
+    end
+  end
+
+  swagger_model :User do
+    key :id, :User
+    key :required, [:id, :name, :username]
+    property :id do
+      key :type, :integer
+      key :format, :int64
+      key :description, 'Unique identifier for User'
+    end
+    property :name do
+      key :type, :string
+      key :description, 'User (real) name'
+    end
+    property :username do
+      key :type, :string
+      key :description, 'User name'
+    end
+  end
+
   swagger_api_root :products do
     key :swaggerVersion, '1.2'
     key :apiVersion, '0.1'

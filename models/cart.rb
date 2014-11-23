@@ -8,17 +8,6 @@ class Cart < ActiveRecord::Base
 
   scope :for_user, -> (u) { where(:user => u) }
 
-  include Swagger::Blocks
-  swagger_model :Cart do
-    key :id, :Cart
-    key :required, [:id]
-    property :id do
-      key :type, :integer
-      key :format, :int64
-      key :description, 'Unique identifier for Cart'
-    end
-  end
-
   def add_to_cart(product, quantity = 1)
     item = cart_items.find_or_initialize_by(:product => product) do |new_cart_item|
       new_cart_item = 0

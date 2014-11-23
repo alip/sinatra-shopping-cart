@@ -10,25 +10,6 @@ class User < ActiveRecord::Base
   has_many :carts
   has_secure_password
 
-  include Swagger::Blocks
-  swagger_model :User do
-    key :id, :User
-    key :required, [:id, :name, :username]
-    property :id do
-      key :type, :integer
-      key :format, :int64
-      key :description, 'Unique identifier for User'
-    end
-    property :name do
-      key :type, :string
-      key :description, 'User (real) name'
-    end
-    property :username do
-      key :type, :string
-      key :description, 'User name'
-    end
-  end
-
   def self.authenticate(username, password)
     User.find_by(:username => username).andand.authenticate(password)
   end
