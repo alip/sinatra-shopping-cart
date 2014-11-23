@@ -2,16 +2,15 @@
 # Copyright (c) 2014 Ali Polatel <alip@exherbo.org>
 # Licensed under the terms of the GNU General Public License v3 (or later)
 
-class User < ActiveRecord::Base
-  validates :name, :presence => true
-  validates :username, :presence => true, :uniqueness => true
-  validates :email, :presence => true, :uniqueness => true
+class Product < ActiveRecord::Base
+  validates :name, :presence => true, :uniqueness => true
+  validates :price, :presence => true, :numericality => {:greater_than_or_equal_to => 0.01}
 
-  has_secure_password
+  has_many :cart_items
 
   include Swagger::Blocks
-  swagger_model :User do
-    key :id, :User
+  swagger_model :Product do
+    key :id, :Product
     property :id do
       key :type, :integer
       key :format, :int64
@@ -21,11 +20,7 @@ class User < ActiveRecord::Base
       key :type, :string
       key :required, :true
     end
-    property :username do
-      key :type, :string
-      key :required, :true
-    end
-    property :name do
+    property :price do
       key :type, :string
       key :required, :true
     end
