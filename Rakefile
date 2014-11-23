@@ -25,6 +25,11 @@ namespace :db do
   end
 end
 
+desc 'Run irb console'
+task :console do
+  exec 'irb -r irb/completion -I lib -r app'
+end
+
 desc 'Run all tests'
 task :test => [:'db:test:reset'] do
   Rake::TestTask.new do |t|

@@ -27,4 +27,8 @@ class User < ActiveRecord::Base
       key :description, 'User name'
     end
   end
+
+  def self.authenticate(username, password)
+    User.find_by(:username => username).andand.authenticate(password)
+  end
 end

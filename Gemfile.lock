@@ -93,6 +93,8 @@ GEM
       rack
       raindrops (~> 0.7)
     uniform_notifier (1.6.2)
+    warden (1.2.3)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -116,3 +118,4 @@ DEPENDENCIES
   sinatra-activerecord (~> 2.0.3)
   swagger-blocks
   unicorn
+  warden

@@ -12,6 +12,7 @@ gem 'bcrypt', '~> 3.1.2'
 
 gem 'andand'
 gem 'multi_json'
+gem 'warden'
 
 gem 'swagger-blocks'
 
