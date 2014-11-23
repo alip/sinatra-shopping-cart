@@ -65,4 +65,11 @@ class Cart < ActiveRecord::Base
       .includes(:product).select(:product => :price)
       .map{|ci| ci.total_price}.reduce(0.0, &:+)
   end
+
+  def as_json(options = {})
+    super(options.merge(:only => [:id], :methods => [:total_price],
+                        :include => {:cart_items => {:only => [:quantity],
+                                                     :methods => [:total_price],
+                                                     :include => {:product => {:only => [:name, :price]}}}})
+  end
 end
