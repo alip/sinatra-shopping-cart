@@ -89,6 +89,6 @@ class SampleShop < Sinatra::Base
   get '/api/carts/:id/total_price' do
     c = Cart.for_user(current_user).find(params[:id])
 
-    c.total_price.to_json
+    c.total_price.to_i.to_json
   end
 end

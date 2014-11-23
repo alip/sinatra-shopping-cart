@@ -7,10 +7,8 @@ class CartItem < ActiveRecord::Base
   belongs_to :product
 
   validates :quantity, :presence => true,
-                       :numericality => {:greater_than => 0,
-                                         :only_integer => true}
+                       :numericality => {:greater_than => 0}
 
-  def total_price
-    product.price * quantity
-  end
+
+  scope :for_cart, -> (cart) { where(:cart => cart) }
 end

@@ -52,9 +52,10 @@ class Cart < ActiveRecord::Base
   def total_price
     p = 0.0
 
-    cart_items
-      .includes(:product).select(:product => :price)
-      .map{|ci| ci.total_price}.reduce(0.0, &:+)
+    CartItem.for_cart(self).
+             joins(:product).
+             select('cart_items.quantity,products.price').
+             map{|ci| ci.price * ci.quantity}.reduce(0.0, &:+)
   end
 
   def as_json(options = {})
