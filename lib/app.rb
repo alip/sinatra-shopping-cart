@@ -51,7 +51,7 @@ class SampleShop < Sinatra::Base
   end
 
   post '/api/carts' do
-    cart = Cart.for_user(@current_user).create!
+    cart = Cart.for_user(@current_user).create!(:user => @current_user)
     if cart.errors.any?
       halt 400, json({:message => cart.errors.messages})
     else
