@@ -4,8 +4,8 @@ A sample shopping cart implementation for Sinatra
 
 Tests require rspec. Use:
 
-$> rake db:test:reset
-$> rspec
+    $> rake db:test:reset
+    $> rspec
 
 to run the tests.
 
