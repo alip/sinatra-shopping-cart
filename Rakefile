@@ -1,17 +1,17 @@
 require 'rake/testtask'
 require 'sinatra/activerecord/rake'
+#require './lib/app'
 
 task :default => :test
 
 namespace :db do
   desc 'Load Sinatra application'
   task :load_config do
-    require_relative 'lib/app'
+    require './lib/app'
   end
 
   desc 'Reset database'
   task :reset => [
-    'db:load_config',
     'db:drop',
     'db:create',
     'db:migrate',
