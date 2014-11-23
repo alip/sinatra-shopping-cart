@@ -11,5 +11,12 @@ describe 'User' do
                          :password => 'my_password', :password_confirmation => 'my_password')
       expect(user).to be_persisted
     end
+
+    it 'does not persist if attributes are not valid' do
+      user = User.create(:name => '', :username => 'my_username', :email => 'my@email.com',
+                         :password => 'my_password', :password_confirmation => 'my_password')
+      expect(user).not_to be_persisted
+      expect(user.errors[:name]).to include("can't be blank")
+    end
   end
 end
