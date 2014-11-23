@@ -126,7 +126,7 @@ class SampleShop
         key :method, 'GET'
         key :summary, 'Cart Index'
         key :notes, 'Lists all available carts'
-        key :nickname, :listCarts
+        key :nickname, :index_carts
         key :type, :array
         items do
           key :'$ref', :Cart
@@ -142,6 +142,41 @@ class SampleShop
           key :paramType, :header
           key :name, :'PASSWORD'
           key :description, 'User password'
+          key :required, true
+          key :type, :string
+        end
+        response_message do
+          key :code, 401
+          key :message, 'Invalid username or password'
+        end
+      end
+    end
+    api do
+      key :path, '/carts/{cart_id}'
+      operation do
+        key :method, 'GET'
+        key :summary, 'List Cart by ID'
+        key :notes, 'Lists Cart by ID'
+        key :nickname, :show_cart
+        key :type, :Cart
+        parameter do
+          key :paramType, :header
+          key :name, :'USERNAME'
+          key :description, 'User name'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :header
+          key :name, :'PASSWORD'
+          key :description, 'User password'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :path
+          key :name, : :cart_id
+          key :description, 'Cart Id'
           key :required, true
           key :type, :string
         end

@@ -50,6 +50,10 @@ class SampleShop < Sinatra::Base
     Cart.for_user(current_user).to_json
   end
 
+  get '/api/carts/:id' do
+    Cart.for_user(current_user).find(params[:id]).to_json
+  end
+
   post '/api/carts' do
     cart = Cart.for_user(current_user).create!
     if cart.errors.any?
