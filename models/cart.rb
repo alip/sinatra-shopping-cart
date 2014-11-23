@@ -51,11 +51,10 @@ class Cart < ActiveRecord::Base
   def set_quantity(product, quantity)
     if quantity.is_a? Integer then
       cart_items.find_by!(:product => product).update!(:quantity => quantity)
-      true
     else
-      errors.add_to_base('quantity not a number') unless quantity.is_a? Integer
-      false
+      errors.add_to_base('quantity not a number')
     end
+    self
   end
 
   def total_price
@@ -70,6 +69,6 @@ class Cart < ActiveRecord::Base
     super(options.merge(:only => [:id], :methods => [:total_price],
                         :include => {:cart_items => {:only => [:quantity],
                                                      :methods => [:total_price],
-                                                     :include => {:product => {:only => [:name, :price]}}}})
+                                                     :include => {:product => {:only => [:name, :price]}}}}))
   end
 end
