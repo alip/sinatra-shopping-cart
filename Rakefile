@@ -11,9 +11,11 @@ namespace :db do
 
   desc 'Reset database'
   task :reset => [
+    'db:load_config',
     'db:drop',
     'db:create',
     'db:migrate',
+    'db:setup',
     'db:seed'
   ]
 

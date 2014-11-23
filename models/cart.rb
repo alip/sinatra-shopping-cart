@@ -9,11 +9,17 @@ class Cart < ActiveRecord::Base
   scope :for_user, -> (u) { where(:user => u) }
 
   def add_to_cart(product, quantity = 1)
-    item = cart_items.find_or_create_by!(:product => product) do |new_cart_item|
-      new_cart_item = 0
-    end
+    item = cart_items.find_by(:product => product)
 
-    item.update!(:quantity => item.quantity + quantity)
+    if item.nil?
+      cart_items.create!(:product => product, :quantity => quantity)
+    else
+      # Important! If we do not validate the new quantity here, we may have
+      # dangerous results during the update below.
+      # e.g: quantity < 0
+      validate_quantity!(quantity)
+      item.update!(:quantity => item.quantity + quantity)
+    end
 
     self
   end
@@ -21,7 +27,9 @@ class Cart < ActiveRecord::Base
   def remove_from_cart(product, quantity = 1)
     item = cart_items.find_by!(:product => product)
 
-    new_quantity -= quantity
+    validate_quantity!(quantity)
+    new_quantity = item.quantity - quantity
+
     if new_quantity <= 0 then
       item.destroy
     else
@@ -54,5 +62,16 @@ class Cart < ActiveRecord::Base
                         :include => {:cart_items => {:only => [:quantity],
                                                      :methods => [:total_price],
                                                      :include => {:product => {:only => [:name, :price]}}}}))
+  end
+
+  private
+
+  def validate_quantity!(quantity)
+      # TODO: isn't there a simpler way to validate this (new) quantity?
+      nci = CartItem.new(:quantity => quantity)
+      unless nci.valid?(:quantity) then
+        errors.add(:quantity, 'Quantity must be greater than 0')
+        raise ActiveRecord::RecordInvalid.new(self)
+      end
   end
 end
