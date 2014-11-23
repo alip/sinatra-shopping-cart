@@ -18,7 +18,7 @@ class Cart < ActiveRecord::Base
       # dangerous results during the update below.
       # e.g: quantity < 0
       validate_quantity!(quantity)
-      item.update!(:quantity => item.quantity + quantity)
+      item.update!(:quantity => item.quantity + quantity.to_i)
     end
 
     self
@@ -28,7 +28,7 @@ class Cart < ActiveRecord::Base
     item = cart_items.find_by!(:product => product)
 
     validate_quantity!(quantity)
-    new_quantity = item.quantity - quantity
+    new_quantity = item.quantity - quantity.to_i
 
     if new_quantity <= 0 then
       item.destroy
