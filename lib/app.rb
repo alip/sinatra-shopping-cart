@@ -5,6 +5,8 @@
 require 'sinatra/base'
 require 'sinatra/activerecord'
 
+require_relative '../models/init'
+
 class SampleShop < Sinatra::Base
   set :app_file, __FILE__
 

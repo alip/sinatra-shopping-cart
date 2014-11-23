@@ -11,7 +11,7 @@ gem 'mysql2'
 gem 'bcrypt', '~> 3.1.2'
 
 gem 'andand'
-gem 'json'
+gem 'multi_json'
 
 gem 'swagger-blocks'
 
@@ -25,6 +25,7 @@ group :development do
 end
 
 group :test do
-  gem 'minitest'
   gem 'rack-test'
+  gem 'rspec'
+  gem 'database_cleaner'
 end
