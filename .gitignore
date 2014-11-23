@@ -1,0 +1,12 @@
+# Ignored files for git VCS
+
+# Backup files
+\#*
+*~
+.#*
+.DS_Store
+*.swp
+.directory
+
+# Must *not* be in version control
+config/database.yml
