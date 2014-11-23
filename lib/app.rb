@@ -127,7 +127,7 @@ class SampleShop < Sinatra::Base
       key :path, '/carts/index'
       operation do
         key :method, 'GET'
-        key :summary, 'Product Index'
+        key :summary, 'Cart Index'
         key :notes, 'Lists all available carts'
         key :nickname, :listCarts
         key :type, :array
@@ -160,7 +160,47 @@ class SampleShop < Sinatra::Base
     Cart.for_user(@current_user).to_json
   end
 
-  #post '/api/carts/create' do
-  #  Cart.for_user(@current_user)
-  #end
+  swagger_api_root :carts do
+    api do
+      key :path, '/carts'
+      operation do
+        key :method, 'POST'
+        key :summary, 'Create Cart'
+        key :notes, 'Create a new cart'
+        key :nickname, :createCart
+        key :type, :Cart
+        parameter do
+          key :paramType, :header
+          key :name, :'USERNAME'
+          key :description, 'User name'
+          key :required, true
+          key :type, :string
+        end
+        parameter do
+          key :paramType, :header
+          key :name, :'PASSWORD'
+          key :description, 'User password'
+          key :required, true
+          key :type, :string
+        end
+        response_message do
+          key :code, 400
+          key :message, 'Invalid arguments'
+        end
+        response_message do
+          key :code, 401
+          key :message, 'Invalid username or password'
+        end
+      end
+    end
+  end
+
+  post '/api/carts' do
+    cart = Cart.for_user(@current_user).create
+    if cart.errors.any?
+      halt 400, json({:message => cart.errors.messages})
+    else
+      cart.to_json
+    end
+  end
 end
